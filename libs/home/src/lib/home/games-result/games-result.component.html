@@ -1,17 +1,19 @@
 <ul class="cards">
-  <li *ngFor="let game of gameResponse">
+  <li *ngFor="let game of gameResponse; index as i">
     <mat-card>
       <mat-card-header>
         <mat-card-title>Game Title: {{ game.title }}</mat-card-title>
         <mat-card-subtitle>Platform: {{ game.platform }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <mat-card-actions>
-          <button style="color: green" mat-button>
+        <mat-card-actions [id]="'unique' + game.gameId">
+          <button
+            (click)="onSubmit(game.gameId)"
+            style="color: green"
+            mat-button
+            [id]="'unique' + game.gameId"
+          >
             <mat-icon>add_circle_outline</mat-icon>Add to Collection
-          </button>
-          <button style="color: red" mat-button>
-            <mat-icon>remove_circle_outline</mat-icon>Delete from Collection
           </button>
         </mat-card-actions>
       </mat-card-content>

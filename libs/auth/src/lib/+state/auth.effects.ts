@@ -143,7 +143,10 @@ export class AuthEffects {
       ofType(addToCollection),
       switchMap(({ gameId }) =>
         this.authService.addToCollection(gameId).pipe(
-          map(() => addToCollectionSuccess()),
+          map(
+            () => addToCollectionSuccess(),
+            this.authFacade.fetchCollection() //onSuccess of Adding to collections, call api so we can update the count badge
+          ),
           catchError((err) => of(addToCollectionError({ error: err })))
         )
       )

@@ -21,7 +21,10 @@ export class WrapperComponent implements OnInit {
     this.authFacade.fetchCollection();
   }
 
-  onSearchGames(searchRequest: SearchRequest): void {
+  onSearchGames(searchRequest: SearchRequest) {
     this.authFacade.searchGame(searchRequest);
+  }
+  onAddGame(gameId: number) {
+    this.authFacade.addToCollection(gameId);
   }
 }

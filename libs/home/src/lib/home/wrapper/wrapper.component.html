@@ -12,6 +12,7 @@
       *ngIf="searchGame$ | async as gameResponse; else noGames"
       [gameResponse]="gameResponse"
       [collection]="collection$ | async"
+      (addGame)="onAddGame($event)"
     >
     </app-games-result>
     <ng-template #noGames>

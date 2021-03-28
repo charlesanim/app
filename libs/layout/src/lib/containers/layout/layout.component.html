@@ -1,24 +1,21 @@
 <mat-toolbar color="primary" fxLayout="row">
   <span>Games Platform</span>
   <div class="right-nav">
-    <span *ngIf="accessGranted$ | async">
+    <ng-container *ngIf="accessGranted$ | async">
+      <button style="text-transform: capitalize" mat-button>
+        Hi, {{ username$ | async }}
+      </button>
       <button
         mat-button
         [routerLink]="['/collections']"
         routerLinkActive="router-link-active"
+        [matBadge]="(collection$ | async)?.length || 0"
+        matBadgeColor="accent"
       >
         Collections
       </button>
       <button (click)="logout()" mat-button>Logout</button>
-    </span>
-    <!-- <span *ngIf="(accessGranted$ | async) === false || null">
-      <span
-        mat-button
-        [routerLink]="['/auth/login']"
-        routerLinkActive="router-link-active"
-        >Login</span
-      >
-    </span> -->
+    </ng-container>
   </div>
 </mat-toolbar>
 <ng-content></ng-content>

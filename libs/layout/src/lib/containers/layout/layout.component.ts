@@ -2,18 +2,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../../../../apps/game-platform/src/app/services/auth';
+import { AuthFacade } from '@app/auth';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
   accessGranted$ = this.authService.accessGranted$;
-
-  constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit() {}
+  username$ = this.authService.username$;
+  collection$ = this.authFacade.collection$;
+  constructor(
+    private authService: AuthService,
+    private authFacade: AuthFacade
+  ) {}
 
   logout() {
     this.authService.logout();
