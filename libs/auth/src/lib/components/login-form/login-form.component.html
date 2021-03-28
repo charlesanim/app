@@ -1,0 +1,64 @@
+<div class="main-div">
+  <mat-card>
+    <mat-card-title>Login</mat-card-title>
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+          <input
+            matInput
+            minlength="3"
+            placeholder="Username"
+            type="text"
+            formControlName="username"
+          />
+          <mat-error>
+            <span
+              *ngIf="
+                loginForm.get('username').hasError('required') &&
+                loginForm.touched
+              "
+              >Required Field</span
+            >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input
+            matInput
+            minlength="3"
+            placeholder="Password"
+            type="text"
+            formControlName="password"
+          />
+          <mat-error>
+            <span
+              *ngIf="
+                loginForm.get('password').hasError('required') &&
+                loginForm.touched
+              "
+              >Required Field</span
+            >
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+
+    <div class="spinner-wrapper">
+      <button mat-raised-button (click)="onSubmit()">
+        <span>Login</span>
+
+        <mat-progress-spinner
+          [diameter]="15"
+          mode="indeterminate"
+          [value]="50"
+          [style.display]="loading ? 'block' : 'none'"
+        ></mat-progress-spinner>
+      </button>
+    </div>
+
+    <ng-container>
+      <mat-error *ngIf="loginError">
+        <span>{{ loginError.error }}</span>
+      </mat-error>
+    </ng-container>
+  </mat-card>
+</div>

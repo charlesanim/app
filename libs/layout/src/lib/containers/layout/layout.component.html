@@ -1,0 +1,24 @@
+<mat-toolbar color="primary" fxLayout="row">
+  <span>Games Platform</span>
+  <div class="right-nav">
+    <span *ngIf="accessGranted$ | async">
+      <button
+        mat-button
+        [routerLink]="['/collections']"
+        routerLinkActive="router-link-active"
+      >
+        Collections
+      </button>
+      <button (click)="logout()" mat-button>Logout</button>
+    </span>
+    <!-- <span *ngIf="(accessGranted$ | async) === false || null">
+      <span
+        mat-button
+        [routerLink]="['/auth/login']"
+        routerLinkActive="router-link-active"
+        >Login</span
+      >
+    </span> -->
+  </div>
+</mat-toolbar>
+<ng-content></ng-content>

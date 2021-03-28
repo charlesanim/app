@@ -14,7 +14,13 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@app/auth": ["libs/auth/src/index.ts"],
+      "@app/material": ["libs/material/src/index.ts"],
+      "@app/layout": ["libs/layout/src/index.ts"],
+      "@app/collections": ["libs/collections/src/index.ts"],
+      "@app/home": ["libs/home/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
