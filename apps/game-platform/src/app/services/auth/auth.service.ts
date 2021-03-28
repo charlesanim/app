@@ -51,9 +51,10 @@ export class AuthService {
   }
 
   searchGame(searchRequest: SearchRequest) {
+    //set http params
     const params: HttpParams = new HttpParams().set(
       'platformId',
-      ((searchRequest.platformId as unknown) as string) || ''
+      ((searchRequest.platformId as unknown) as string) || '' // type cast of number type to string for params
     );
 
     return this.http

@@ -14,14 +14,44 @@
             <span *ngIf="">No games found</span>
           </mat-error>
         </mat-form-field>
-        <section class="platforms">
+
+        <!-- Optional Platform selection-->
+
+        <mat-form-field>
+          <mat-label>Platform(Optional)</mat-label>
+          <input
+            type="text"
+            placeholder="Choose a platform"
+            aria-label="Text"
+            matInput
+            [formControl]="platformName"
+            [matAutocomplete]="auto"
+            formControlName="platformName"
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let p of filteredPlatforms$ | async"
+              [value]="p.name"
+              [name]="'type' + p.platformId"
+            >
+              {{ p.name }}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error>
+            <span *ngIf="platformName.touched && platformName.invalid"
+              >Be sure to choose one platform or select below</span
+            >
+          </mat-error>
+        </mat-form-field>
+
+        <!-- <section class="platforms">
           <mat-checkbox
             *ngFor="let p of platforms; index as i"
             [name]="'type' + i"
           >
             {{ p.name }}</mat-checkbox
           >
-        </section>
+        </section> -->
         <button mat-raised-button (click)="onSubmit()">
           <mat-icon>search</mat-icon>
           Search

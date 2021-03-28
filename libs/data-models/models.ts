@@ -27,7 +27,7 @@ export interface Platforms {
 }
 export interface SearchRequest {
   gameName: string;
-  platformId?: number | null;
+  platformId: number | null;
 }
 
 export interface GameDetails {

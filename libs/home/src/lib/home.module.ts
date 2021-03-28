@@ -12,6 +12,7 @@ import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from '@app/auth';
 import { AuthEffects } from '@app/auth';
 import { WrapperComponent } from './home/wrapper/wrapper.component';
+import { GamesResultComponent } from './home/games-result/games-result.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { WrapperComponent } from './home/wrapper/wrapper.component';
     StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
-  declarations: [SearchComponent, WrapperComponent],
+  declarations: [WrapperComponent, SearchComponent, GamesResultComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

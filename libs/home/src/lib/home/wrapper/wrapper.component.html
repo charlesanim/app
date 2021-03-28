@@ -1,4 +1,21 @@
 <app-search
   [platforms]="platforms$ | async"
   [loading]="loading$ | async"
+  (searchGames)="onSearchGames($event)"
 ></app-search>
+<div style="margin-bottom: 50px">
+  <div style="text-align: center">
+    <h2>Available Games</h2>
+  </div>
+  <div class="main">
+    <app-games-result
+      *ngIf="searchGame$ | async as gameResponse; else noGames"
+      [gameResponse]="gameResponse"
+      [collection]="collection$ | async"
+    >
+    </app-games-result>
+    <ng-template #noGames>
+      <p>No games to display, please search for games above.</p>
+    </ng-template>
+  </div>
+</div>

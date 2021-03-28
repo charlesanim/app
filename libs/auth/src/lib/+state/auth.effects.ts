@@ -89,16 +89,20 @@ export class AuthEffects {
   fetchPlatforms$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fetchPlatforms),
-      switchMap(() =>
-        this.authService.fetchPlatforms().pipe(
-          map((platforms) =>
-            fetchPlatformsSuccess({
-              platforms,
-            })
-          ),
-          catchError((err) => of(fetchPlatformsError({ error: err })))
-        )
-      )
+      withLatestFrom(this.authFacade.platforms$), //check if platforms data is available
+      switchMap(([, platFormsData]) => {
+        // if its not, make the api call
+        if (platFormsData === null) {
+          return this.authService.fetchPlatforms().pipe(
+            map((platforms) =>
+              fetchPlatformsSuccess({
+                platforms,
+              })
+            ),
+            catchError((err) => of(fetchPlatformsError({ error: err })))
+          );
+        }
+      })
     )
   );
 
