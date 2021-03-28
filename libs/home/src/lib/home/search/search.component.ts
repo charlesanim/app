@@ -1,5 +1,7 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Platforms } from 'libs/data-models';
 
 @Component({
   selector: 'app-search',
@@ -9,6 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   @Input() loading = false;
+  @Input() platforms: Platforms[];
   submitted = false;
   @Output() searchGames = new EventEmitter<string>();
   constructor(private formBuilder: FormBuilder) {}

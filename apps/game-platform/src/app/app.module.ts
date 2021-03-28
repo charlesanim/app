@@ -1,10 +1,10 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
-// eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import { authRoutes, AuthModule, AuthGuard } from '@app/auth';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { NxModule } from '@nrwl/angular';
+import { CollectionsModule } from '@app/collections';
+import { HomeModule } from '@app/home';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -49,6 +51,9 @@ import { NxModule } from '@nrwl/angular';
       }
     ),
     AuthModule,
+    LayoutModule,
+    CollectionsModule,
+    HomeModule,
     StoreModule.forRoot(
       {},
       {

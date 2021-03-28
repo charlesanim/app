@@ -2,17 +2,15 @@
 import { Injectable } from '@angular/core';
 
 import { select, Store } from '@ngrx/store';
+import { LoginRequest, SearchRequest } from 'libs/data-models/models';
 import {
-  LoginRequest,
-  LoginResponse,
-  SearchRequest,
-  SearchResponse,
-} from 'libs/data-models/models';
-import {
+  addToCollection,
+  fetchCollection,
+  fetchGameDetails,
+  fetchPlatforms,
   login,
-  loginSuccess,
+  removeGame,
   searchGame,
-  searchGameSuccess,
 } from './auth.actions';
 
 import { AuthPartialState } from './auth.reducer';
@@ -25,23 +23,38 @@ export class AuthFacade {
    * and expose them as observables through the facade.
    */
   loading$ = this.store$.pipe(select(authQuery.getLoading));
-  loginError$ = this.store$.pipe(select(authQuery.getLoginError));
-  searchGameError$ = this.store$.pipe(select(authQuery.getSearchGameError));
+  error$ = this.store$.pipe(select(authQuery.getError));
   searchGame$ = this.store$.pipe(select(authQuery.getSearchGameSuccess));
+  platforms$ = this.store$.pipe(select(authQuery.getPlatforms));
+  gameDetails$ = this.store$.pipe(select(authQuery.getGameDetails));
+  collection$ = this.store$.pipe(select(authQuery.getCollection));
 
   searchGame(searchRequest: SearchRequest): void {
     this.store$.dispatch(searchGame({ searchRequest }));
   }
 
-  searchGameSuccess(searchResponse: SearchResponse[]): void {
-    this.store$.dispatch(searchGameSuccess({ searchResponse }));
-  }
   loginSubmit(loginRequest: LoginRequest): void {
     this.store$.dispatch(login({ loginRequest }));
   }
 
-  loginSuccess(loginResponse: LoginResponse): void {
-    this.store$.dispatch(loginSuccess({ loginResponse }));
+  fetchPlatforms(): void {
+    this.store$.dispatch(fetchPlatforms());
+  }
+
+  fetchGameDetails(gameId: number): void {
+    this.store$.dispatch(fetchGameDetails({ gameId }));
+  }
+
+  fetchCollection(): void {
+    this.store$.dispatch(fetchCollection());
+  }
+
+  addToCollection(gameId: number): void {
+    this.store$.dispatch(addToCollection({ gameId }));
+  }
+
+  removeGame(gameId: number): void {
+    this.store$.dispatch(removeGame({ gameId }));
   }
 
   constructor(private store$: Store<AuthPartialState>) {}

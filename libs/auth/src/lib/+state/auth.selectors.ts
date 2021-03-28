@@ -11,9 +11,9 @@ export const getLoginSuccess = createSelector(
   (state: AuthState) => state.loginResponse
 );
 
-export const getLoginError = createSelector(
+export const getError = createSelector(
   getAuthState,
-  (state: AuthState) => state.loginError
+  (state: AuthState) => state.error
 );
 
 export const getLoading = createSelector(
@@ -25,16 +25,25 @@ export const getSearchGameSuccess = createSelector(
   getAuthState,
   (state: AuthState) => state.searchResponse
 );
-
-export const getSearchGameError = createSelector(
+export const getPlatforms = createSelector(
   getAuthState,
-  (state: AuthState) => state.searchError
+  (state: AuthState) => state.platforms
+);
+export const getGameDetails = createSelector(
+  getAuthState,
+  (state: AuthState) => state.gameDetails
+);
+export const getCollection = createSelector(
+  getAuthState,
+  (state: AuthState) => state.collection
 );
 
 export const authQuery = {
   getLoading,
-  getLoginError,
+  getError,
   getLoginSuccess,
-  getSearchGameError,
   getSearchGameSuccess,
+  getPlatforms,
+  getGameDetails,
+  getCollection,
 };

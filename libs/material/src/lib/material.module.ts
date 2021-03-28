@@ -11,7 +11,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
-
+import { MatCheckboxModule } from '@angular/material/checkbox';
 @NgModule({
   imports: [
     FlexLayoutModule,
@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatMenuModule,
     MatTableModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   exports: [
     FlexLayoutModule,
@@ -40,6 +41,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatMenuModule,
     MatTableModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
 })
 export class MaterialModule {}

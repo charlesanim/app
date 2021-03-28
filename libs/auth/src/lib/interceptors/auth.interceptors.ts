@@ -15,9 +15,11 @@ export class AuthInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('accessGranted');
 
-    if (token) {
+    if (token && req.url.includes('games')) {
       const authReq = req.clone({
-        headers: req.headers.set('Authorization', token),
+        setHeaders: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return next.handle(authReq);
     } else {

@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'game-platform';
   constructor(private store: Store<AuthState>, private authFacade: AuthFacade) {
     // const res = JSON.parse(localStorage.getItem('accessGranted'));
     // if (res) {

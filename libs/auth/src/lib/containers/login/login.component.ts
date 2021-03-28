@@ -13,7 +13,7 @@ import { AuthService } from '../../../../../../apps/game-platform/src/app/servic
 })
 export class LoginComponent {
   loading$ = this.authFacade.loading$;
-  loginError$ = this.authFacade.loginError$;
+  loginError$ = this.authFacade.error$;
   constructor(
     private authService: AuthService,
     private router: Router,

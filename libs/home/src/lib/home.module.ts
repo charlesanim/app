@@ -1,3 +1,4 @@
+/* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -10,6 +11,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import * as fromAuth from '@app/auth';
 import { AuthEffects } from '@app/auth';
+import { WrapperComponent } from './home/wrapper/wrapper.component';
 
 @NgModule({
   imports: [
@@ -19,12 +21,12 @@ import { AuthEffects } from '@app/auth';
     FormsModule,
     HttpClientModule,
     RouterModule.forChild([
-      { path: '', pathMatch: 'full', component: SearchComponent },
+      { path: '', pathMatch: 'full', component: WrapperComponent },
     ]),
     StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
     EffectsModule.forFeature([AuthEffects]),
   ],
-  declarations: [SearchComponent],
+  declarations: [SearchComponent, WrapperComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

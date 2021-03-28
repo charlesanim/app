@@ -1,14 +1,16 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   Collection,
   GameDetails,
+  LoginRequest,
+  LoginResponse,
   Platforms,
   SearchRequest,
   SearchResponse,
-} from '@app/home';
-import { LoginRequest, LoginResponse } from 'libs/data-models/models';
+} from 'libs/data-models';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
@@ -18,14 +20,14 @@ import { map, tap } from 'rxjs/operators';
 export class AuthService {
   public apiUrl = 'https://games.excellentpeople.com';
 
-  private accessGrantedSubject$ = new BehaviorSubject<LoginResponse>(null);
+  private accessGrantedSubject$ = new BehaviorSubject<string>(null);
 
   accessGranted$ = this.accessGrantedSubject$.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
     const accessGranted = localStorage.getItem('accessGranted');
     if (accessGranted) {
-      this.accessGrantedSubject$.next(JSON.parse(accessGranted));
+      this.accessGrantedSubject$.next(accessGranted);
     }
   }
 
@@ -35,8 +37,8 @@ export class AuthService {
     request.append('password', authenticate.password);
     return this.http.post(`${this.apiUrl}/login`, request).pipe(
       tap((res: LoginResponse) => {
-        this.accessGrantedSubject$.next(res);
-        localStorage.setItem('accessGranted', JSON.stringify(res));
+        this.accessGrantedSubject$.next(res.token);
+        localStorage.setItem('accessGranted', res.token);
       })
     );
   }
@@ -45,6 +47,7 @@ export class AuthService {
     // remove user from local storage to log user out
     localStorage.removeItem('accessGranted');
     this.accessGrantedSubject$.next(null);
+    this.router.navigate(['/auth/login']);
   }
 
   searchGame(searchRequest: SearchRequest) {
@@ -59,12 +62,13 @@ export class AuthService {
   }
 
   fetchPlatforms() {
-    return this.http
-      .get(`${this.apiUrl}/Platforms`)
-      .pipe(map((res: Platforms[]) => res));
+    return this.http.get(`${this.apiUrl}/Platforms`).pipe(
+      // map(checkValidResponse),
+      map((res: Platforms[]) => res)
+    );
   }
 
-  fetchGame(gameId: number) {
+  fetchGameDetails(gameId: number) {
     return this.http
       .get(`${this.apiUrl}/Games/${gameId}`)
       .pipe(map((res: GameDetails[]) => res));
@@ -76,14 +80,22 @@ export class AuthService {
       .pipe(map((res: Collection[]) => res));
   }
 
-  saveGame(gameId: number) {
+  addToCollection(gameId: number) {
     return this.http
       .post(`${this.apiUrl}/Collection/`, gameId)
       .pipe(map((res: any) => res));
   }
-  deleteGame(gameId: number) {
+  removeGame(gameId: number) {
     return this.http
       .delete(`${this.apiUrl}/Collection/${gameId}`)
       .pipe(map((res: any) => res));
   }
 }
+
+export const checkValidResponse = (response: any) => {
+  if (response) {
+    return response;
+  } else {
+    throw new Error();
+  }
+};
