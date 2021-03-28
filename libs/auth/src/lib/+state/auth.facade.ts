@@ -2,8 +2,18 @@
 import { Injectable } from '@angular/core';
 
 import { select, Store } from '@ngrx/store';
-import { LoginRequest, LoginResponse } from 'libs/data-models/models';
-import { login, loginSuccess } from './auth.actions';
+import {
+  LoginRequest,
+  LoginResponse,
+  SearchRequest,
+  SearchResponse,
+} from 'libs/data-models/models';
+import {
+  login,
+  loginSuccess,
+  searchGame,
+  searchGameSuccess,
+} from './auth.actions';
 
 import { AuthPartialState } from './auth.reducer';
 import { authQuery } from './auth.selectors';
@@ -16,7 +26,16 @@ export class AuthFacade {
    */
   loading$ = this.store$.pipe(select(authQuery.getLoading));
   loginError$ = this.store$.pipe(select(authQuery.getLoginError));
+  searchGameError$ = this.store$.pipe(select(authQuery.getSearchGameError));
+  searchGame$ = this.store$.pipe(select(authQuery.getSearchGameSuccess));
 
+  searchGame(searchRequest: SearchRequest): void {
+    this.store$.dispatch(searchGame({ searchRequest }));
+  }
+
+  searchGameSuccess(searchResponse: SearchResponse[]): void {
+    this.store$.dispatch(searchGameSuccess({ searchResponse }));
+  }
   loginSubmit(loginRequest: LoginRequest): void {
     this.store$.dispatch(login({ loginRequest }));
   }

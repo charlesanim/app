@@ -5,12 +5,11 @@ import { SearchComponent } from './home/search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '@app/material';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthInterceptor } from '@app/auth';
+import { AuthFacade, AuthInterceptor } from '@app/auth';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-import * as fromHome from './+state/home.reducer';
-import { HomeEffects } from './+state/home.effects';
-import { HomeFacade } from './+state/home.facade';
+import * as fromAuth from '@app/auth';
+import { AuthEffects } from '@app/auth';
 
 @NgModule({
   imports: [
@@ -22,8 +21,8 @@ import { HomeFacade } from './+state/home.facade';
     RouterModule.forChild([
       { path: '', pathMatch: 'full', component: SearchComponent },
     ]),
-    StoreModule.forFeature(fromHome.HOME_FEATURE_KEY, fromHome.reducer),
-    EffectsModule.forFeature([HomeEffects]),
+    StoreModule.forFeature(fromAuth.AUTH_FEATURE_KEY, fromAuth.reducer),
+    EffectsModule.forFeature([AuthEffects]),
   ],
   declarations: [SearchComponent],
   providers: [
@@ -32,7 +31,7 @@ import { HomeFacade } from './+state/home.facade';
       useClass: AuthInterceptor,
       multi: true,
     },
-    HomeFacade,
+    AuthFacade,
   ],
 })
 export class HomeModule {}

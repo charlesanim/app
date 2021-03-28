@@ -1,14 +1,28 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
 import { createReducer, on, Action } from '@ngrx/store';
-import { LoginResponse } from 'libs/data-models/models';
-import { login, loginError, loginSuccess } from './auth.actions';
+import {
+  LoginResponse,
+  SearchRequest,
+  SearchResponse,
+} from 'libs/data-models/models';
+import {
+  login,
+  loginError,
+  loginSuccess,
+  searchGame,
+  searchGameError,
+  searchGameSuccess,
+} from './auth.actions';
 
 export const AUTH_FEATURE_KEY = 'auth';
 
 export interface AuthState {
   loginResponse: LoginResponse | null;
   loading: boolean;
-  loginError: any; // last known error (if any)
+  loginError: string | null;
+  searchRequest: SearchRequest | null;
+  searchResponse: SearchResponse[] | null;
+  searchError: string | null;
 }
 
 export interface AuthPartialState {
@@ -19,6 +33,9 @@ export const initialState: AuthState = {
   loginResponse: null,
   loading: false,
   loginError: null,
+  searchRequest: null,
+  searchResponse: null,
+  searchError: null,
 };
 
 const authReducer = createReducer(
@@ -39,6 +56,24 @@ const authReducer = createReducer(
     ...state,
     loginError,
     loading: false,
+  })),
+  on(searchGame, (state, { searchRequest }) => ({
+    ...state,
+    searchRequest,
+    loading: true,
+    searchError: null,
+  })),
+  on(searchGameSuccess, (state, { searchResponse }) => ({
+    ...state,
+    searchResponse,
+    loading: null,
+    searchError: null,
+  })),
+  on(searchGameError, (state, { searchError }) => ({
+    ...state,
+    searchError,
+    loading: null,
+    searchResponse: null,
   }))
 );
 

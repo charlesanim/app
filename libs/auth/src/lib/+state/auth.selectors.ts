@@ -21,8 +21,20 @@ export const getLoading = createSelector(
   (state: AuthState) => state.loading
 );
 
+export const getSearchGameSuccess = createSelector(
+  getAuthState,
+  (state: AuthState) => state.searchResponse
+);
+
+export const getSearchGameError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.searchError
+);
+
 export const authQuery = {
   getLoading,
   getLoginError,
   getLoginSuccess,
+  getSearchGameError,
+  getSearchGameSuccess,
 };
