@@ -24,16 +24,9 @@ export class AuthService {
 
   accessGranted$ = this.accessGrantedSubject$.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {
-    const accessGranted = localStorage.getItem('accessGranted');
-    const user = localStorage.getItem('username');
-    if (accessGranted && user) {
-      this.accessGrantedSubject$.next(accessGranted);
-    }
-  }
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(authenticate: LoginRequest) {
-    localStorage.setItem('username', `${authenticate.username}`);
     const request = new FormData();
     request.append('username', authenticate.username);
     request.append('password', authenticate.password);
@@ -41,6 +34,7 @@ export class AuthService {
       tap((res: LoginResponse) => {
         this.accessGrantedSubject$.next(res.token);
         localStorage.setItem('accessGranted', res.token);
+        localStorage.setItem('username', `${authenticate.username}`);
       })
     );
   }

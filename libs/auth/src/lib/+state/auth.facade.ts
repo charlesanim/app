@@ -10,6 +10,7 @@ import {
   fetchPlatforms,
   login,
   removeGame,
+  resetState,
   searchGame,
 } from './auth.actions';
 
@@ -75,6 +76,9 @@ export class AuthFacade {
 
   removeGame(gameId: number): void {
     this.store$.dispatch(removeGame({ gameId }));
+  }
+  resetState(): void {
+    this.store$.dispatch(resetState());
   }
 
   constructor(private store$: Store<AuthPartialState>) {}

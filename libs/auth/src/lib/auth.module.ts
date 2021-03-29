@@ -16,6 +16,7 @@ import { AuthFacade } from './+state/auth.facade';
 
 export const authRoutes: Route[] = [
   { path: 'login', component: LoginComponent },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
 ];
 @NgModule({
   imports: [

@@ -28,6 +28,7 @@ import {
   removeGame,
   removeGameError,
   removeGameSuccess,
+  resetState,
   searchGame,
   searchGameError,
   searchGameSuccess,
@@ -205,6 +206,9 @@ const authReducer = createReducer(
     removeGameError: error,
     loading: false,
     removeGameSuccess: false,
+  })),
+  on(resetState, (state) => ({
+    ...initialState,
   }))
 );
 

@@ -29,7 +29,7 @@ import { HomeModule } from '@app/home';
     FormsModule,
     RouterModule.forRoot(
       [
-        { path: '', pathMatch: 'full', redirectTo: 'auth/login' },
+        { path: '', pathMatch: 'full', redirectTo: 'auth' },
         { path: 'auth', children: authRoutes },
         {
           path: 'home',

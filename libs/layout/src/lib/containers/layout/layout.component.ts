@@ -8,7 +8,7 @@ import { AuthFacade } from '@app/auth';
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
 })
-export class LayoutComponent implements OnInit {
+export class LayoutComponent {
   accessGranted$ = this.authService.accessGranted$;
   collection$ = this.authFacade.collection$;
   user = localStorage.getItem('username');
@@ -16,14 +16,15 @@ export class LayoutComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private authFacade: AuthFacade
-  ) {}
-
-  ngOnInit() {
-    this.authFacade.fetchPlatforms();
-    this.authFacade.fetchCollection();
+  ) {
+    if (this.user) {
+      this.authFacade.fetchPlatforms();
+      this.authFacade.fetchCollection();
+    }
   }
 
   logout() {
     this.authService.logout();
+    this.authFacade.resetState();
   }
 }

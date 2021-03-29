@@ -110,3 +110,5 @@ export const removeGameError = createAction(
   '[Home] Remove Game from Collection Error',
   props<{ error: HttpErrorResponse | null }>()
 );
+
+export const resetState = createAction('[Auth] Reset State');
