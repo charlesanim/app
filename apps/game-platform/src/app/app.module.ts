@@ -29,8 +29,6 @@ import { HomeModule } from '@app/home';
     FormsModule,
     RouterModule.forRoot(
       [
-        { path: '', pathMatch: 'full', redirectTo: 'auth' },
-        { path: 'auth', children: authRoutes },
         {
           path: 'home',
           loadChildren: () =>
@@ -45,6 +43,8 @@ import { HomeModule } from '@app/home';
             ),
           canActivate: [AuthGuard],
         },
+        { path: 'auth', children: authRoutes },
+        { path: '', pathMatch: 'full', redirectTo: 'auth/login' },
       ],
       {
         initialNavigation: 'enabled',
