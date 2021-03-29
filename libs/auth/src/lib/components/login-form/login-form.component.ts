@@ -1,4 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LoginRequest } from 'libs/data-models/models';
@@ -10,7 +11,7 @@ import { LoginRequest } from 'libs/data-models/models';
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   @Input() loading = false;
-  @Input() loginError: any;
+  @Input() loginError: HttpErrorResponse | null;
   submitted = false;
   @Output() submitLogin = new EventEmitter<LoginRequest>();
 

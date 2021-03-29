@@ -1,7 +1,7 @@
 <app-search
   [platforms]="platforms$ | async"
   [loading]="loading$ | async"
-  [error]="error$ | async"
+  [error]="searchGameError$ | async"
   (searchGames)="onSearchGames($event)"
 ></app-search>
 <div style="margin-bottom: 50px">
@@ -12,8 +12,8 @@
     <app-games-result
       *ngIf="searchGame$ | async as gameResponse; else noGames"
       [gameResponse]="gameResponse"
-      [error]="error$ | async"
-      [addCollectionSuccess]="addCollectionSuccess$ | async"
+      [error]="addToCollectionError$ | async"
+      [addToCollectionSuccess]="addToCollectionSuccess$ | async"
       [collection]="collection$ | async"
       (addGame)="onAddGame($event)"
       (viewGame)="onViewGame($event)"

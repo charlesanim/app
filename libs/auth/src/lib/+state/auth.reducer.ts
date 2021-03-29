@@ -1,4 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { HttpErrorResponse } from '@angular/common/http';
 import { createReducer, on, Action } from '@ngrx/store';
 import {
   Collection,
@@ -40,11 +41,18 @@ export interface AuthState {
   searchRequest: SearchRequest | null;
   searchResponse: SearchResponse[] | null;
   platforms: Platforms[] | null;
-  error: string | null;
   collection: Collection[] | null;
   gameDetails: GameDetails[] | null;
-  addCollectionSuccess: boolean;
+  addToCollectionSuccess: boolean;
   removeGameSuccess: boolean;
+  //Errors
+  searchGameError: HttpErrorResponse | null;
+  fetchPlatformsError: HttpErrorResponse | null;
+  fetchCollectionError: HttpErrorResponse | null;
+  fetchGameDetailsError: HttpErrorResponse | null;
+  addToCollectionError: HttpErrorResponse | null;
+  removeGameError: HttpErrorResponse | null;
+  loginError: HttpErrorResponse | null;
 }
 
 export interface AuthPartialState {
@@ -54,14 +62,21 @@ export interface AuthPartialState {
 export const initialState: AuthState = {
   loginResponse: null,
   loading: false,
-  error: null,
   searchRequest: null,
   searchResponse: null,
   platforms: null,
   collection: null,
   gameDetails: null,
-  addCollectionSuccess: false,
+  addToCollectionSuccess: false,
   removeGameSuccess: false,
+  //Errors
+  searchGameError: null,
+  fetchPlatformsError: null,
+  fetchCollectionError: null,
+  fetchGameDetailsError: null,
+  addToCollectionError: null,
+  removeGameError: null,
+  loginError: null,
 };
 
 const authReducer = createReducer(
@@ -70,124 +85,124 @@ const authReducer = createReducer(
     ...state,
     loginRequest,
     loading: true,
-    error: null,
+    loginError: null,
   })),
   on(loginSuccess, (state, { loginResponse }) => ({
     ...state,
     loginResponse,
     loading: false,
-    error: null,
+    loginError: null,
   })),
   on(loginError, (state, { error }) => ({
     ...state,
-    error,
+    loginError: error,
     loading: false,
   })),
   on(searchGame, (state, { searchRequest }) => ({
     ...state,
     searchRequest: null,
     loading: true,
-    error: null,
+    searchGameError: null,
   })),
   on(searchGameSuccess, (state, { searchResponse }) => ({
     ...state,
     searchResponse,
     loading: false,
-    error: null,
+    searchGameError: null,
   })),
   on(searchGameError, (state, { error }) => ({
     ...state,
-    error,
+    searchGameError: error,
     loading: false,
     searchResponse: null,
   })),
   on(fetchPlatforms, (state) => ({
     ...state,
     loading: true,
-    error: null,
+    fetchPlatformsError: null,
   })),
   on(fetchPlatformsSuccess, (state, { platforms }) => ({
     ...state,
     platforms,
     loading: false,
-    error: null,
+    fetchPlatformsError: null,
   })),
   on(fetchPlatformsError, (state, { error }) => ({
     ...state,
-    error,
+    fetchPlatformsError: error,
     loading: false,
     platforms: null,
   })),
   on(fetchGameDetails, (state, { gameId }) => ({
     ...state,
     loading: true,
-    error: null,
+    fetchGameDetailsError: null,
     gameDetails: [],
   })),
   on(fetchGameDetailsSuccess, (state, { gameDetails }) => ({
     ...state,
     gameDetails,
     loading: false,
-    error: null,
+    fetchGameDetailsError: null,
   })),
   on(fetchGameDetailsError, (state, { error }) => ({
     ...state,
-    error,
+    fetchGameDetailsError: error,
     loading: false,
     gameDetails: null,
   })),
   on(fetchCollection, (state) => ({
     ...state,
     loading: true,
-    error: null,
+    fetchCollectionError: null,
     collection: [],
   })),
   on(fetchCollectionSuccess, (state, { collection }) => ({
     ...state,
     collection,
     loading: false,
-    error: null,
+    fetchCollectionError: null,
   })),
   on(fetchCollectionError, (state, { error }) => ({
     ...state,
-    error,
+    fetchCollectionError: error,
     loading: false,
     collection: null,
   })),
   on(addToCollection, (state, { gameId }) => ({
     ...state,
     loading: true,
-    error: null,
-    addCollectionSuccess: false,
+    addToCollectionError: null,
+    addToCollectionSuccess: false,
   })),
-  on(addToCollectionSuccess, (state) => ({
+  on(addToCollectionSuccess, (state, { gameId }) => ({
     ...state,
     loading: false,
-    error: null,
-    addCollectionSuccess: true,
+    addToCollectionError: null,
+    addToCollectionSuccess: true,
   })),
   on(addToCollectionError, (state, { error }) => ({
     ...state,
-    error,
+    addToCollectionError: error,
     loading: false,
-    addCollectionSuccess: false,
+    addToCollectionSuccess: false,
   })),
   on(removeGame, (state) => ({
     ...state,
     loading: true,
-    error: null,
+    removeGameError: null,
     removeGameSuccess: false,
   })),
   on(removeGameSuccess, (state, { gameId }) => ({
     ...state,
     loading: false,
-    error: null,
+    removeGameError: null,
     removeGameSuccess: true,
     collection: state.collection.filter((v) => v.gameId !== gameId),
   })),
   on(removeGameError, (state, { error }) => ({
     ...state,
-    error,
+    removeGameError: error,
     loading: false,
     removeGameSuccess: false,
   }))

@@ -11,11 +11,6 @@ export const getLoginSuccess = createSelector(
   (state: AuthState) => state.loginResponse
 );
 
-export const getError = createSelector(
-  getAuthState,
-  (state: AuthState) => state.error
-);
-
 export const getLoading = createSelector(
   getAuthState,
   (state: AuthState) => state.loading
@@ -37,23 +32,60 @@ export const getCollection = createSelector(
   getAuthState,
   (state: AuthState) => state.collection
 );
-export const addCollectionSuccess = createSelector(
+export const addToCollectionSuccess = createSelector(
   getAuthState,
-  (state: AuthState) => state.addCollectionSuccess
+  (state: AuthState) => state.addToCollectionSuccess
 );
 export const removeGameSuccess = createSelector(
   getAuthState,
   (state: AuthState) => state.removeGameSuccess
 );
-addCollectionSuccess;
+
+// Errors
+
+export const getLoginError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.loginError
+);
+export const getSearchGameError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.searchGameError
+);
+export const getFetchPlatformsError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.fetchPlatformsError
+);
+export const getFetchCollectionError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.fetchCollectionError
+);
+export const getFetchGameDetailsError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.fetchGameDetailsError
+);
+export const getAddToCollectionError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.addToCollectionError
+);
+export const getRemoveGameError = createSelector(
+  getAuthState,
+  (state: AuthState) => state.removeGameError
+);
+
 export const authQuery = {
   getLoading,
-  getError,
   getLoginSuccess,
-  addCollectionSuccess,
+  addToCollectionSuccess,
   getSearchGameSuccess,
   getPlatforms,
   getGameDetails,
   getCollection,
   removeGameSuccess,
+  getLoginError,
+  getSearchGameError,
+  getFetchPlatformsError,
+  getFetchCollectionError,
+  getFetchGameDetailsError,
+  getAddToCollectionError,
+  getRemoveGameError,
 };

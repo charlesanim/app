@@ -1,4 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -15,11 +16,13 @@ import { take, takeUntil } from 'rxjs/operators';
 export class GamesComponent implements OnInit, OnDestroy {
   collection$ = this.authFacade.collection$;
   submitted = false;
-  error$ = this.authFacade.error$;
+  fetchCollectionError$ = this.authFacade.fetchCollectionError$;
+  removeGameError$ = this.authFacade.removeGameError$;
   removeGameSuccess$ = this.authFacade.removeGameSuccess$;
   onDestroy$ = new Subject();
-  errorPing: any;
-  removeSuccess: boolean;
+  removeGameScenarioError: HttpErrorResponse | null;
+  fetchCollectionScenarioError: HttpErrorResponse | null;
+  removeGameScenarioSuccess: boolean;
 
   constructor(
     private authFacade: AuthFacade,
@@ -28,17 +31,22 @@ export class GamesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    combineLatest([this.error$, this.removeGameSuccess$])
+    combineLatest([
+      this.fetchCollectionError$,
+      this.removeGameSuccess$,
+      this.removeGameError$,
+    ])
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe(([error, removeGame]) => {
-        this.errorPing = error;
-        this.removeSuccess = removeGame;
+      .subscribe(([collectionError, removeSuccess, removeError]) => {
+        this.fetchCollectionScenarioError = collectionError;
+        this.removeGameScenarioSuccess = removeSuccess;
+        this.removeGameScenarioError = removeError;
         this.snackBarPopup();
       });
   }
 
   private snackBarPopup(): void {
-    if (this.submitted && this.errorPing) {
+    if (this.submitted && this.removeGameScenarioError) {
       this._snackBar.open(
         'Failed to remove Game from collection, please try again later',
         'OK',
@@ -47,7 +55,7 @@ export class GamesComponent implements OnInit, OnDestroy {
         }
       );
     }
-    if (this.submitted && this.removeSuccess) {
+    if (this.submitted && this.removeGameScenarioSuccess) {
       this._snackBar.open('Game removed from collection', 'OK!', {
         duration: 3000,
       });

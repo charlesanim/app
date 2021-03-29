@@ -15,8 +15,9 @@ export class WrapperComponent {
   loading$ = this.authFacade.loading$;
   searchGame$ = this.authFacade.searchGame$;
   collection$ = this.authFacade.collection$;
-  error$ = this.authFacade.error$;
-  addCollectionSuccess$ = this.authFacade.addCollectionSuccess$;
+  addToCollectionError$ = this.authFacade.addToCollectionError$;
+  searchGameError$ = this.authFacade.searchGameError$;
+  addToCollectionSuccess$ = this.authFacade.addToCollectionSuccess$;
 
   constructor(private authFacade: AuthFacade, public dialog: MatDialog) {}
 

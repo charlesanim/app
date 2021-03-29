@@ -23,15 +23,31 @@ export class AuthFacade {
    * and expose them as observables through the facade.
    */
   loading$ = this.store$.pipe(select(authQuery.getLoading));
-  error$ = this.store$.pipe(select(authQuery.getError));
   searchGame$ = this.store$.pipe(select(authQuery.getSearchGameSuccess));
   platforms$ = this.store$.pipe(select(authQuery.getPlatforms));
   gameDetails$ = this.store$.pipe(select(authQuery.getGameDetails));
   collection$ = this.store$.pipe(select(authQuery.getCollection));
-  addCollectionSuccess$ = this.store$.pipe(
-    select(authQuery.addCollectionSuccess)
+  addToCollectionSuccess$ = this.store$.pipe(
+    select(authQuery.addToCollectionSuccess)
   );
   removeGameSuccess$ = this.store$.pipe(select(authQuery.removeGameSuccess));
+
+  //Error
+  loginError$ = this.store$.pipe(select(authQuery.getLoginError));
+  searchGameError$ = this.store$.pipe(select(authQuery.getSearchGameError));
+  fetchPlatformsError$ = this.store$.pipe(
+    select(authQuery.getFetchPlatformsError)
+  );
+  fetchCollectionError$ = this.store$.pipe(
+    select(authQuery.getFetchCollectionError)
+  );
+  fetchGameDetailsError$ = this.store$.pipe(
+    select(authQuery.getFetchGameDetailsError)
+  );
+  addToCollectionError$ = this.store$.pipe(
+    select(authQuery.getAddToCollectionError)
+  );
+  removeGameError$ = this.store$.pipe(select(authQuery.getRemoveGameError));
 
   searchGame(searchRequest: SearchRequest): void {
     this.store$.dispatch(searchGame({ searchRequest }));

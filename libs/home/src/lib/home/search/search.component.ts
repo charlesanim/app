@@ -1,4 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormBuilder,
@@ -19,7 +20,7 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   @Input() loading = false;
   @Input() platforms: Platforms[];
-  @Input() error: any;
+  @Input() error: HttpErrorResponse | null;
   @Output() searchGames = new EventEmitter<SearchRequest>();
   submitted = false;
 

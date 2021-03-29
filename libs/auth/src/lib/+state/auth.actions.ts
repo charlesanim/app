@@ -1,4 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props } from '@ngrx/store';
 import {
   Collection,
@@ -22,7 +23,7 @@ export const loginSuccess = createAction(
 
 export const loginError = createAction(
   '[Auth] Login Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 
 export const logOut = createAction('[Auth] Log Out');
@@ -39,7 +40,7 @@ export const searchGameSuccess = createAction(
 
 export const searchGameError = createAction(
   '[Home] Search Game Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 
 export const fetchPlatforms = createAction('[Home] Fetch Platforms');
@@ -51,7 +52,7 @@ export const fetchPlatformsSuccess = createAction(
 
 export const fetchPlatformsError = createAction(
   '[Home] Fetch Platforms Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 
 export const fetchGameDetails = createAction(
@@ -66,7 +67,7 @@ export const fetchGameDetailsSuccess = createAction(
 
 export const fetchGameDetailsError = createAction(
   '[Home] Fetch Game Details Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 
 export const fetchCollection = createAction('[Home] Fetch Game Collection');
@@ -78,7 +79,7 @@ export const fetchCollectionSuccess = createAction(
 
 export const fetchCollectionError = createAction(
   '[Home] Fetch Game Collection Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 
 export const addToCollection = createAction(
@@ -87,12 +88,13 @@ export const addToCollection = createAction(
 );
 
 export const addToCollectionSuccess = createAction(
-  '[Home] Add To Game Collection Success'
+  '[Home] Add To Game Collection Success',
+  props<{ gameId: number }>()
 );
 
 export const addToCollectionError = createAction(
   '[Home] Add To Game Collection Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
 export const removeGame = createAction(
   '[Home] Remove Game from Collection',
@@ -106,5 +108,5 @@ export const removeGameSuccess = createAction(
 
 export const removeGameError = createAction(
   '[Home] Remove Game from Collection Error',
-  props<{ error: string | null }>()
+  props<{ error: HttpErrorResponse | null }>()
 );
