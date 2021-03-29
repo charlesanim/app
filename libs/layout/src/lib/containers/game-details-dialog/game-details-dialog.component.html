@@ -1,4 +1,4 @@
-<ng-container *ngIf="gameDetails$ | async as gameDetails">
+<ng-container *ngIf="gameDetails$ | async as gameDetails; else loading">
   <h2 mat-dialog-title>Game Details</h2>
 
   <mat-card style="max-width: 400px">
@@ -40,9 +40,7 @@
       </li>
       <li>
         <em> Platform </em>:
-        <span *ngFor="let p of gameDetails.platform">
-          {{ p.name }}
-        </span>
+        <span>{{ gameDetails.platform?.name }} </span>
       </li>
       <p>
         {{ gameDetails.overview }}
@@ -62,3 +60,6 @@
     </button>
   </mat-dialog-actions>
 </ng-container>
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>

@@ -37,7 +37,7 @@ export interface GameDetails {
   releaseDate: Date | null;
   genres: string[];
   publishers: string[];
-  platform: Platforms[];
+  platform: Platforms;
   imageUrl: string | null;
 }
 

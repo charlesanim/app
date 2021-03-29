@@ -25,8 +25,6 @@ import {
 } from './auth.actions';
 import {
   catchError,
-  filter,
-  isEmpty,
   map,
   switchMap,
   tap,
@@ -159,14 +157,9 @@ export class AuthEffects {
   removeGame$ = createEffect(() =>
     this.actions$.pipe(
       ofType(removeGame),
-      withLatestFrom(this.authFacade.collection$), // get latest from collections[]
-      map((
-        [{ gameId }, collection] // find the gameId that matches game object
-      ) => collection.find((v) => v.gameId === gameId)),
-      filter((collection) => !!collection?.gameId), //filter
       switchMap(({ gameId }) =>
         this.authService.removeGame(gameId).pipe(
-          map(() => removeGameSuccess()),
+          map(() => removeGameSuccess(), this.authFacade.fetchCollection()),
           catchError((err) => of(removeGameError({ error: err })))
         )
       )

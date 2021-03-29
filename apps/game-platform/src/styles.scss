@@ -6,19 +6,6 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
 
-// .mat-form-field {
-//   width: 100%;
-//   min-width: 300px;
-// }
-
-// mat-card-title,
-// mat-card-content {
-//   display: flex;
-//   justify-content: center;
-// }
-
-.spinner-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.mat-card-title:hover {
+  color: #673ab7;
 }

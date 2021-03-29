@@ -6,10 +6,8 @@ import { AuthFacade } from '@app/auth';
   templateUrl: './game-details-dialog.component.html',
   styleUrls: ['./game-details-dialog.component.scss'],
 })
-export class GameDetailsDialogComponent implements OnInit {
+export class GameDetailsDialogComponent {
   gameDetails$ = this.authFacade.gameDetails$;
-
+  loading$ = this.authFacade.loading$;
   constructor(private authFacade: AuthFacade) {}
-
-  ngOnInit(): void {}
 }
