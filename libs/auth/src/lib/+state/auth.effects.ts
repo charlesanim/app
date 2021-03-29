@@ -159,7 +159,7 @@ export class AuthEffects {
       ofType(removeGame),
       switchMap(({ gameId }) =>
         this.authService.removeGame(gameId).pipe(
-          map(() => removeGameSuccess(), this.authFacade.fetchCollection()),
+          map(() => removeGameSuccess({ gameId })),
           catchError((err) => of(removeGameError({ error: err })))
         )
       )

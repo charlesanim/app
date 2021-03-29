@@ -100,7 +100,8 @@ export const removeGame = createAction(
 );
 
 export const removeGameSuccess = createAction(
-  '[Home] Remove Game from Collection Success'
+  '[Home] Remove Game from Collection Success',
+  props<{ gameId: number }>()
 );
 
 export const removeGameError = createAction(

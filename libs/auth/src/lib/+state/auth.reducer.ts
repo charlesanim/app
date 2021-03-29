@@ -172,18 +172,18 @@ const authReducer = createReducer(
     loading: false,
     addCollectionSuccess: false,
   })),
-  on(removeGame, (state, { gameId }) => ({
+  on(removeGame, (state) => ({
     ...state,
     loading: true,
     error: null,
     removeGameSuccess: false,
-    collection: state.collection.filter((v) => v.gameId !== gameId), // remove matching game from collection[]
   })),
-  on(removeGameSuccess, (state) => ({
+  on(removeGameSuccess, (state, { gameId }) => ({
     ...state,
     loading: false,
     error: null,
     removeGameSuccess: true,
+    collection: state.collection.filter((v) => v.gameId !== gameId),
   })),
   on(removeGameError, (state, { error }) => ({
     ...state,
