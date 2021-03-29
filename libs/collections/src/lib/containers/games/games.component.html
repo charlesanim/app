@@ -1,1 +1,45 @@
-<p>games works!</p>
+<div style="margin-top: 50px">
+  <h3 style="text-align: center">My Game Collection</h3>
+  <div class="main">
+    <ul class="cards">
+      <li *ngFor="let game of collection$ | async; index as i">
+        <mat-card class="matCard">
+          <div style="float: left">
+            <ng-container *ngIf="game.imageUrl; else placeholder">
+              <img
+                [alt]="game.title"
+                style="max-width: 60px"
+                [src]="game.imageUrl"
+              />
+            </ng-container>
+            <ng-template #placeholder>
+              <img alt="placeholder" src="https://via.placeholder.com/60" />
+            </ng-template>
+          </div>
+
+          <mat-card-header>
+            <mat-card-title
+              style="cursor: pointer"
+              (click)="viewGameDetails(game.gameId)"
+              >Game Title: {{ game.title }}</mat-card-title
+            >
+            <mat-card-subtitle>Platform: {{ game.platform }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-card-actions [id]="'unique' + game.gameId">
+              <button
+                aria-label="Add to Collection"
+                (click)="onSubmit(game.gameId)"
+                style="color: red"
+                mat-button
+                [id]="'unique' + game.gameId"
+              >
+                <mat-icon>delete_sweep</mat-icon>Remove from Collection
+              </button>
+            </mat-card-actions>
+          </mat-card-content>
+        </mat-card>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -2,12 +2,17 @@
   <li *ngFor="let game of gameResponse; index as i">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>Game Title: {{ game.title }}</mat-card-title>
+        <mat-card-title
+          style="cursor: pointer"
+          (click)="viewGameDetails(game.gameId)"
+          >Game Title: {{ game.title }}</mat-card-title
+        >
         <mat-card-subtitle>Platform: {{ game.platform }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <mat-card-actions [id]="'unique' + game.gameId">
           <button
+            aria-label="Add to Collection"
             (click)="onSubmit(game.gameId)"
             style="color: green"
             mat-button

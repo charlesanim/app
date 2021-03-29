@@ -14,15 +14,7 @@ import { AuthService } from '../../../../../../apps/game-platform/src/app/servic
 export class LoginComponent {
   loading$ = this.authFacade.loading$;
   loginError$ = this.authFacade.error$;
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private authFacade: AuthFacade
-  ) {
-    if (this.authService.accessGranted$) {
-      this.router.navigate(['/collections']);
-    }
-  }
+  constructor(private authFacade: AuthFacade) {}
 
   login(authenticate: LoginRequest): void {
     this.authFacade.loginSubmit(authenticate);

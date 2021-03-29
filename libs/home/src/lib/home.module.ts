@@ -14,6 +14,8 @@ import { AuthEffects } from '@app/auth';
 import { WrapperComponent } from './home/wrapper/wrapper.component';
 import { GamesResultComponent } from './home/games-result/games-result.component';
 
+import { LayoutModule } from '@app/layout';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { GamesResultComponent } from './home/games-result/games-result.component
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    LayoutModule,
     RouterModule.forChild([
       { path: '', pathMatch: 'full', component: WrapperComponent },
     ]),

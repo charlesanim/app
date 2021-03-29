@@ -21,21 +21,19 @@ export class AuthService {
   public apiUrl = 'https://games.excellentpeople.com';
 
   private accessGrantedSubject$ = new BehaviorSubject<string>(null);
-  private userNameSubject$ = new BehaviorSubject<string>(null);
 
   accessGranted$ = this.accessGrantedSubject$.asObservable();
-  username$ = this.userNameSubject$.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {
     const accessGranted = localStorage.getItem('accessGranted');
     const user = localStorage.getItem('username');
     if (accessGranted && user) {
       this.accessGrantedSubject$.next(accessGranted);
-      this.userNameSubject$.next(user);
     }
   }
 
   login(authenticate: LoginRequest) {
+    localStorage.setItem('username', `${authenticate.username}`);
     const request = new FormData();
     request.append('username', authenticate.username);
     request.append('password', authenticate.password);
@@ -43,7 +41,6 @@ export class AuthService {
       tap((res: LoginResponse) => {
         this.accessGrantedSubject$.next(res.token);
         localStorage.setItem('accessGranted', res.token);
-        localStorage.setItem('username', `${authenticate.username}`);
       })
     );
   }
@@ -51,6 +48,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('accessGranted');
+    localStorage.removeItem('username');
     this.accessGrantedSubject$.next(null);
     this.router.navigate(['/auth/login']);
   }

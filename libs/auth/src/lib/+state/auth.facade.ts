@@ -28,6 +28,10 @@ export class AuthFacade {
   platforms$ = this.store$.pipe(select(authQuery.getPlatforms));
   gameDetails$ = this.store$.pipe(select(authQuery.getGameDetails));
   collection$ = this.store$.pipe(select(authQuery.getCollection));
+  addCollectionSuccess$ = this.store$.pipe(
+    select(authQuery.addCollectionSuccess)
+  );
+  removeGameSuccess$ = this.store$.pipe(select(authQuery.removeGameSuccess));
 
   searchGame(searchRequest: SearchRequest): void {
     this.store$.dispatch(searchGame({ searchRequest }));

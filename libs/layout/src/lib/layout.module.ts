@@ -6,10 +6,11 @@ import { MaterialModule } from '@app/material'; // Added
 import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthFacade, AuthInterceptor } from '@app/auth';
+import { GameDetailsDialogComponent } from './containers/game-details-dialog/game-details-dialog.component';
 @NgModule({
   imports: [CommonModule, MaterialModule, RouterModule, CommonModule],
-  declarations: [LayoutComponent],
-  exports: [LayoutComponent],
+  declarations: [LayoutComponent, GameDetailsDialogComponent],
+  exports: [LayoutComponent, GameDetailsDialogComponent],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

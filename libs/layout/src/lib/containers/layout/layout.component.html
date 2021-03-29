@@ -3,7 +3,14 @@
   <div class="right-nav">
     <ng-container *ngIf="accessGranted$ | async">
       <button style="text-transform: capitalize" mat-button>
-        Hi, {{ username$ | async }}
+        Hi, {{ user }}
+      </button>
+      <button
+        mat-button
+        [routerLink]="['/home']"
+        routerLinkActive="router-link-active"
+      >
+        Home
       </button>
       <button
         mat-button

@@ -145,7 +145,9 @@ export class AuthEffects {
         this.authService.addToCollection(gameId).pipe(
           map(
             () => addToCollectionSuccess(),
-            this.authFacade.fetchCollection() //onSuccess of Adding to collections, call api so we can update the count badge
+            this.authFacade.fetchCollection()
+            // onSuccess of Adding to collections, call api so we can update the count badge,
+            // could handle it better in reducer, by filtering results vs calling api. , this.authFacade.fetchCollection()
           ),
           catchError((err) => of(addToCollectionError({ error: err })))
         )

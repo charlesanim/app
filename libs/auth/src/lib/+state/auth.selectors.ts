@@ -37,13 +37,23 @@ export const getCollection = createSelector(
   getAuthState,
   (state: AuthState) => state.collection
 );
-
+export const addCollectionSuccess = createSelector(
+  getAuthState,
+  (state: AuthState) => state.addCollectionSuccess
+);
+export const removeGameSuccess = createSelector(
+  getAuthState,
+  (state: AuthState) => state.removeGameSuccess
+);
+addCollectionSuccess;
 export const authQuery = {
   getLoading,
   getError,
   getLoginSuccess,
+  addCollectionSuccess,
   getSearchGameSuccess,
   getPlatforms,
   getGameDetails,
   getCollection,
+  removeGameSuccess,
 };

@@ -43,6 +43,8 @@ export interface AuthState {
   error: string | null;
   collection: Collection[] | null;
   gameDetails: GameDetails[] | null;
+  addCollectionSuccess: boolean;
+  removeGameSuccess: boolean;
 }
 
 export interface AuthPartialState {
@@ -58,6 +60,8 @@ export const initialState: AuthState = {
   platforms: null,
   collection: null,
   gameDetails: null,
+  addCollectionSuccess: false,
+  removeGameSuccess: false,
 };
 
 const authReducer = createReducer(
@@ -81,7 +85,7 @@ const authReducer = createReducer(
   })),
   on(searchGame, (state, { searchRequest }) => ({
     ...state,
-    searchRequest,
+    searchRequest: null,
     loading: true,
     error: null,
   })),
@@ -154,31 +158,38 @@ const authReducer = createReducer(
     ...state,
     loading: true,
     error: null,
+    addCollectionSuccess: false,
   })),
   on(addToCollectionSuccess, (state) => ({
     ...state,
     loading: false,
     error: null,
+    addCollectionSuccess: true,
   })),
   on(addToCollectionError, (state, { error }) => ({
     ...state,
     error,
     loading: false,
+    addCollectionSuccess: false,
   })),
   on(removeGame, (state, { gameId }) => ({
     ...state,
     loading: true,
     error: null,
+    removeGameSuccess: false,
+    collection: state.collection.filter((v) => v.gameId !== gameId),
   })),
   on(removeGameSuccess, (state) => ({
     ...state,
     loading: false,
     error: null,
+    removeGameSuccess: true,
   })),
   on(removeGameError, (state, { error }) => ({
     ...state,
     error,
     loading: false,
+    removeGameSuccess: false,
   }))
 );
 

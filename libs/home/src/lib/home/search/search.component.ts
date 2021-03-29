@@ -19,6 +19,7 @@ export class SearchComponent implements OnInit {
   searchForm: FormGroup;
   @Input() loading = false;
   @Input() platforms: Platforms[];
+  @Input() error: any;
   @Output() searchGames = new EventEmitter<SearchRequest>();
   submitted = false;
 
