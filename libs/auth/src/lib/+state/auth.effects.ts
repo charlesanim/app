@@ -25,6 +25,7 @@ import {
 } from './auth.actions';
 import {
   catchError,
+  filter,
   isEmpty,
   map,
   switchMap,
@@ -147,7 +148,7 @@ export class AuthEffects {
             () => addToCollectionSuccess(),
             this.authFacade.fetchCollection()
             // onSuccess of Adding to collections, call api so we can update the count badge,
-            // could handle it better in reducer, by filtering results vs calling api. , this.authFacade.fetchCollection()
+            // could handle it better in reducer, by pushing game object into collections array,
           ),
           catchError((err) => of(addToCollectionError({ error: err })))
         )
@@ -158,6 +159,11 @@ export class AuthEffects {
   removeGame$ = createEffect(() =>
     this.actions$.pipe(
       ofType(removeGame),
+      withLatestFrom(this.authFacade.collection$), // get latest from collections[]
+      map((
+        [{ gameId }, collection] // find the gameId that matches game object
+      ) => collection.find((v) => v.gameId === gameId)),
+      filter((collection) => !!collection?.gameId), //filter
       switchMap(({ gameId }) =>
         this.authService.removeGame(gameId).pipe(
           map(() => removeGameSuccess()),
