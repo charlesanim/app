@@ -1,6 +1,6 @@
 <div class="main-div">
   <mat-card>
-    <mat-card-title>Login</mat-card-title>
+    <mat-card-title style="text-align: center">Welcome</mat-card-title>
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <mat-form-field>
@@ -43,7 +43,7 @@
     </mat-card-content>
 
     <div class="spinner-wrapper">
-      <button mat-raised-button (click)="onSubmit()">
+      <button mat-raised-button color="primary" (click)="onSubmit()">
         <span>Login</span>
 
         <mat-progress-spinner
