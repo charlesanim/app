@@ -1,5 +1,5 @@
 /* eslint-disable @nrwl/nx/enforce-module-boundaries */
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../../../../../../apps/game-platform/src/app/services/auth';
 import { AuthFacade } from '@app/auth';
 
@@ -11,17 +11,12 @@ import { AuthFacade } from '@app/auth';
 export class LayoutComponent {
   accessGranted$ = this.authService.accessGranted$;
   collection$ = this.authFacade.collection$;
-  user = localStorage.getItem('username');
+  username$ = this.authService.username$;
 
   constructor(
     private authService: AuthService,
     private authFacade: AuthFacade
-  ) {
-    if (this.user) {
-      this.authFacade.fetchPlatforms();
-      this.authFacade.fetchCollection();
-    }
-  }
+  ) {}
 
   logout() {
     this.authService.logout();

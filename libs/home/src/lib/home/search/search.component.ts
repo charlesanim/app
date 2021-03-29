@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { AuthFacade } from '@app/auth';
 import { Platforms, SearchRequest } from 'libs/data-models';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
@@ -26,9 +27,15 @@ export class SearchComponent implements OnInit {
 
   filteredPlatforms$: Observable<Platforms[]>;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private authFacade: AuthFacade
+  ) {}
 
   ngOnInit() {
+    //make these api calls
+    this.authFacade.fetchPlatforms();
+    this.authFacade.fetchCollection();
     // render searchform
     this.searchForm = this.formBuilder.group({
       //Validators to make sure user can search based on letters and numbers in the string

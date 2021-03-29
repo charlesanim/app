@@ -21,10 +21,19 @@ export class AuthService {
   public apiUrl = 'https://games.excellentpeople.com';
 
   private accessGrantedSubject$ = new BehaviorSubject<string>(null);
+  public usernameSubject$ = new BehaviorSubject<string>(null);
 
   accessGranted$ = this.accessGrantedSubject$.asObservable();
+  username$ = this.usernameSubject$.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    const accessGranted = localStorage.getItem('accessGranted');
+    const user = localStorage.getItem('username');
+    if (accessGranted) {
+      this.accessGrantedSubject$.next(accessGranted);
+      this.usernameSubject$.next(user);
+    }
+  }
 
   login(authenticate: LoginRequest) {
     const request = new FormData();
@@ -33,6 +42,7 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, request).pipe(
       tap((res: LoginResponse) => {
         this.accessGrantedSubject$.next(res.token);
+        this.usernameSubject$.next(authenticate.username);
         localStorage.setItem('accessGranted', res.token);
         localStorage.setItem('username', `${authenticate.username}`);
       })
@@ -40,10 +50,11 @@ export class AuthService {
   }
 
   logout() {
-    // remove user from local storage to log user out
+    // remove user from and log user out
     localStorage.removeItem('accessGranted');
     localStorage.removeItem('username');
     this.accessGrantedSubject$.next(null);
+    this.usernameSubject$.next(null);
     this.router.navigate(['/auth/login']);
   }
 

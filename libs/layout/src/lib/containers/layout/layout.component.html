@@ -3,7 +3,7 @@
   <div class="right-nav">
     <ng-container *ngIf="accessGranted$ | async">
       <button style="text-transform: capitalize" mat-button>
-        Hi, {{ user }}
+        Hi, {{ username$ | async }}
       </button>
       <button
         mat-button

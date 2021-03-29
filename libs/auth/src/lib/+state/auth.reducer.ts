@@ -168,7 +168,7 @@ const authReducer = createReducer(
     ...state,
     fetchCollectionError: error,
     loading: false,
-    collection: null,
+    collection: [],
   })),
   on(addToCollection, (state, { gameId }) => ({
     ...state,

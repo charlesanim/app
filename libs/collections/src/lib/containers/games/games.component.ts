@@ -35,14 +35,20 @@ export class GamesComponent implements OnInit, OnDestroy {
       this.fetchCollectionError$,
       this.removeGameSuccess$,
       this.removeGameError$,
+      this.collection$,
     ])
       .pipe(takeUntil(this.onDestroy$))
-      .subscribe(([collectionError, removeSuccess, removeError]) => {
-        this.fetchCollectionScenarioError = collectionError;
-        this.removeGameScenarioSuccess = removeSuccess;
-        this.removeGameScenarioError = removeError;
-        this.snackBarPopup();
-      });
+      .subscribe(
+        ([collectionError, removeSuccess, removeError, collectionData]) => {
+          if (!collectionData) {
+            this.authFacade.fetchCollection();
+          }
+          this.fetchCollectionScenarioError = collectionError;
+          this.removeGameScenarioSuccess = removeSuccess;
+          this.removeGameScenarioError = removeError;
+          this.snackBarPopup();
+        }
+      );
   }
 
   private snackBarPopup(): void {
